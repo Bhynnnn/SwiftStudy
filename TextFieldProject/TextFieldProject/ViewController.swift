@@ -31,6 +31,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "이메일 입력하시오"
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .always
+        
+        // 화면 시작하자마자 키보드 올라오게 responder 설정
+//        textField.becomeFirstResponder()
+    }
+    
+    // 화면 터치 시 view 끝내기 ( 키보드 내리기 )
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
     // textfield의 입력을 시작할 대 호출 (시작할지 말지의 여부 허락하는 것)
@@ -57,11 +65,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     // textfield 글자 내용이 (한글자 한글자) 입력되거나 지워질 때 호출이 됨 (허락)
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print(#function)
-        print(string)
+//        print(#function)
+//        print(string)
         // 입력되는 한 글자를 출력함
-        return true
         
+        let maxLength = 10
+        let currentString: NSString = (textField.text ?? "") as NSString
+        let newString:NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
     }
     
     // textfield의 엔터키가 눌러지면 다음 동작을 허락할 것인지 말것인지
@@ -83,7 +94,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        
+        // 키보드 내리는 responder
+        textField.resignFirstResponder()
     }
     
 }

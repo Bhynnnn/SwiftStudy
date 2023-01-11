@@ -10,8 +10,8 @@ import UIKit
 class ThirdViewController: UIViewController {
     
     @IBOutlet weak var mainLabel: UILabel!
-    
-    
+    var someString: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
